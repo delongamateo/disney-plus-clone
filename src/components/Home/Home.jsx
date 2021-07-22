@@ -5,7 +5,7 @@ import Viewers from '../Viewers/Viewers';
 import Movies from '../Movies/Movies';
 import db from '../../firebase';
 import {useDispatch} from 'react-redux';
-import {setMovies} from '../features/movie/movieSlice';
+import {setMovies} from '../../features/movie/movieSlice';
 
 function Home() {
     const dispatch = useDispatch();
