@@ -1,37 +1,61 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components';
+import {useParams} from 'react-router-dom';
+import db from '../../firebase';
 
 function Detail() {
+    const {id} = useParams();
+    const [movie, setMovie] = useState()
+
+    useEffect(() => {
+        db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc)=>{
+            if(doc.exists){
+                setMovie(doc.data());
+            } else {
+
+            }
+        })
+    }, [])
+
+    console.log(movie)
+
     return (
         <Container>
-            <Background>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg" />
-            </Background>
-            <ImageTitle>
-
-            </ImageTitle>
-            <Controls>
-                <PlayButton>
-                    <img src="/images/play-icon-black.png" />
-                    <span>PLAY</span>
-                </PlayButton>
-                <TrailerButton>
-                    <img src="/images/play-icon-white.png" />
-                    <span>TRAILER</span>
-                </TrailerButton>
-                <AddButton>
-                    <span>+</span>
-                </AddButton>
-                <GroupWatchButton>
-                    <img src="/images/group-icon.png" />
-                </GroupWatchButton>
-            </Controls>
-            <SubTitle>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            </SubTitle>
-            <Description>
-                lorem ipsum dolor sit amet consectetur adipis. lorem ips lorem ipsum dolor sit amet consectetur adipis. lorem ips lorem ipsum dolor sit amet consectetur adipis. lorem ips
-            </Description>
+            {movie && (
+                <>
+                <Background>
+                    <img src={movie.backgroundImg} />
+                </Background>
+                <ImageTitle>
+                    <img src={movie.titleImg} />
+                </ImageTitle>
+                <Controls>
+                    <PlayButton>
+                        <img src="/images/play-icon-black.png" />
+                        <span>PLAY</span>
+                    </PlayButton>
+                    <TrailerButton>
+                        <img src="/images/play-icon-white.png" />
+                        <span>TRAILER</span>
+                    </TrailerButton>
+                    <AddButton>
+                        <span>+</span>
+                    </AddButton>
+                    <GroupWatchButton>
+                        <img src="/images/group-icon.png" />
+                    </GroupWatchButton>
+                </Controls>
+                <SubTitle>
+                    {movie.subTitle} 
+                </SubTitle>
+                <Description>
+                    {movie.description}
+                </Description>
+                </>
+            )}
         </Container>
     )
 }
