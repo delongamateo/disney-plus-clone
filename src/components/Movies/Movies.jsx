@@ -28,7 +28,7 @@ function Movies() {
 }
 
 const Container = styled.div`
-    
+    margin: 20px;
 `
 const Content = styled.div`
     display: grid;
